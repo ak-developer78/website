@@ -6,4 +6,5 @@ export default defineConfig({
   // Add this line:
   base: '/website/', 
   plugins: [react()],
+  base: '/website/',
 })
