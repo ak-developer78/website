@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://ak-developer78.github.io/website",
+  "homepage": "https://ak-developer78.github.io/my-live-website",
  "scripts": {
   "predeploy": "npm run build",
   "deploy": "gh-pages -d dist",
   "dev": "vite",
   "start": "vite",
-  "build": "vite build",
+ "build": "npx vite build",
   "preview": "vite preview"
 },
   "dependencies": {
