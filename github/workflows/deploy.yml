@@ -37,6 +37,9 @@ jobs:
           node-version: 18
       - name: Install dependencies
         run: npm install
+      # --- THIS IS THE NEW STEP THAT FIXES THE ERROR ---
+      - name: Grant execute permission for Vite
+        run: chmod +x node_modules/.bin/vite
       - name: Build
         run: npm run build # This uses the "vite build" command from your package.json
       - name: Setup Pages
