@@ -15,18 +15,25 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
+  # Single deploy job
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    
+    # --- THIS IS THE KEY FIX ---
+    # Set the default working directory for all run steps in this job
+    defaults:
+      run:
+        working-directory: ./website
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,25 +42,19 @@ jobs:
         with:
           node-version: 18
       
-      # --- FIX: All commands below will now run inside the 'website' folder ---
+      # These commands will now automatically run inside the './website' folder
       - name: Install dependencies
         run: npm install
-        working-directory: ./website # Tells this step to run in the 'website' subfolder
-
       - name: Build
         run: npm run build
-        working-directory: ./website # Tells this step to run in the 'website' subfolder
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
-      # --- FIX: Point to the correct 'dist' folder location ---
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the dist folder from inside the 'website' folder
-          path: './website/dist' 
-          
+          # The path is still relative to the repository root
+          path: './website/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
