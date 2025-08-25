@@ -27,13 +27,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    
-    # --- THIS IS THE KEY FIX ---
-    # Set the default working directory for all run steps in this job
-    defaults:
-      run:
-        working-directory: ./website
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,20 +34,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      
-      # These commands will now automatically run inside the './website' folder
       - name: Install dependencies
         run: npm install
+        
+      # --- THIS IS THE REAL FIX for the original "Permission denied" error ---
+      - name: Grant execute permission for Vite
+        run: chmod +x ./node_modules/.bin/vite
+        
       - name: Build
         run: npm run build
-
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # The path is still relative to the repository root
-          path: './website/dist'
+          # Upload the root 'dist' folder
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
