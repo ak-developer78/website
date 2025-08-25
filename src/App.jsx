@@ -564,16 +564,12 @@
 
 
 
-
-// src/App.jsx (Complete & Updated)
+// src/App.jsx (Complete & Corrected for Live Deployment)
 
 import React, { useState, useEffect } from 'react';
-
-// Import CSS
 import './index.css';
 import './App.css';
-
-// Import All Components & Pages
+// ... all your other component imports
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hero from './components/Hero';
@@ -589,82 +585,46 @@ import AboutPage from './pages/AboutPage';
 import PortfolioPage from './pages/PortfolioPage';
 import ServicePage from './pages/ServicePage';
 import { serviceData } from './data/serviceData';
-
-// Import Icons
 import { FaUser, FaEnvelope, FaPencilAlt, FaConciergeBell } from 'react-icons/fa';
 
-const logoUrl = 'https://solvebytez.com/assets/images/logos/main-logo.png';
-const servicesList = [
-  "Mobile Application", "Web Application", "Digital Marketing", "Game Development",
-  "Augmented Reality (AR)", "Virtual Reality (VR)", "Blockchain Technology",
-  "AI-Powered Solutions", "UI/UX"
-];
+// --- The live URL for your backend API ---
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-const Preloader = ({ isHiding }) => (
-  <div className={`preloader-overlay ${isHiding ? 'hiding' : ''}`}>
-    <div className="preloader-gate-left"></div>
-    <div className="preloader-gate-right"></div>
-    <div className="preloader-logo-container">
-      <img src={logoUrl} alt="Loading..." className="preloader-logo-grayscale" />
-      <img src={logoUrl} alt="" className="preloader-logo-color" />
-    </div>
-  </div>
-);
+const logoUrl = 'https://solvebytez.com/assets/images/logos/main-logo.png';
+const servicesList = [ "Mobile Application", "Web Application", "Digital Marketing", "Game Development", "Augmented Reality (AR)", "Virtual Reality (VR)", "Blockchain Technology", "AI-Powered Solutions", "UI/UX" ];
+const Preloader = ({ isHiding }) => ( /* ... preloader JSX ... */ <div className={`preloader-overlay ${isHiding ? 'hiding' : ''}`}><div className="preloader-gate-left"></div><div className="preloader-gate-right"></div><div className="preloader-logo-container"><img src={logoUrl} alt="Loading..." className="preloader-logo-grayscale" /><img src={logoUrl} alt="" className="preloader-logo-color" /></div></div> );
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isHiding, setIsHiding] = useState(false);
   const [currentPage, setCurrentPage] = useState({ page: 'home', slug: null });
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
-
-  // --- NEW: State for the popup form data and submission status ---
-  const [popupFormData, setPopupFormData] = useState({
-    fullName: '', email: '', service: '', message: ''
-  });
+  const [popupFormData, setPopupFormData] = useState({ fullName: '', email: '', service: '', message: '' });
   const [isPopupSubmitting, setIsPopupSubmitting] = useState(false);
-  const [popupStatus, setPopupStatus] = useState({ message: '', type: '' }); // type can be 'success' or 'error'
+  const [popupStatus, setPopupStatus] = useState({ message: '', type: '' });
 
-  // Preloader useEffect remains the same
-  useEffect(() => {
-    const hideTimer = setTimeout(() => setIsHiding(true), 2000);
-    const removeTimer = setTimeout(() => setIsLoading(false), 2800);
-    return () => { clearTimeout(hideTimer); clearTimeout(removeTimer); };
-  }, []);
+  useEffect(() => { /* ... preloader useEffect ... */ const hideTimer = setTimeout(() => setIsHiding(true), 2000); const removeTimer = setTimeout(() => setIsLoading(false), 2800); return () => { clearTimeout(hideTimer); clearTimeout(removeTimer); }; }, []);
+  useEffect(() => { /* ... popup timer useEffect ... */ let timer; if (!isLoading && currentPage.page === 'home') { timer = setTimeout(() => setIsContactPopupOpen(true), 5000); } return () => clearTimeout(timer); }, [currentPage, isLoading]);
+  
+  const handlePopupChange = (e) => { const { name, value } = e.target; setPopupFormData(prev => ({ ...prev, [name]: value })); };
 
-  // Popup open timer useEffect remains the same
-  useEffect(() => {
-    let timer;
-    if (!isLoading && currentPage.page === 'home') {
-      timer = setTimeout(() => setIsContactPopupOpen(true), 5000);
-    }
-    return () => clearTimeout(timer);
-  }, [currentPage, isLoading]);
-
-  // --- NEW: Handle changes in the popup form inputs ---
-  const handlePopupChange = (e) => {
-    const { name, value } = e.target;
-    setPopupFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  // --- UPDATED: This function now sends data to the backend ---
   const handlePopupFormSubmit = async (e) => {
     e.preventDefault();
     setIsPopupSubmitting(true);
     setPopupStatus({ message: '', type: '' });
 
     try {
-      const response = await fetch('http://localhost:8000/api/popup-submit', {
+      // THIS LINE IS NOW CORRECTED
+      const response = await fetch(`${apiUrl}/api/popup-submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(popupFormData)
       });
-
       const result = await response.json();
-
       if (response.ok) {
         setPopupStatus({ message: result.msg, type: 'success' });
-        setPopupFormData({ fullName: '', email: '', service: '', message: '' }); // Clear form
-        setTimeout(() => setIsContactPopupOpen(false), 2000); // Close modal after 2 seconds
+        setPopupFormData({ fullName: '', email: '', service: '', message: '' });
+        setTimeout(() => setIsContactPopupOpen(false), 2000);
       } else {
         setPopupStatus({ message: `Error: ${result.msg}`, type: 'error' });
       }
@@ -677,42 +637,30 @@ function App() {
   };
 
   const handleNavigate = (page, slug = null) => { setCurrentPage({ page, slug }); window.scrollTo(0, 0); };
-  const renderPage = () => { /* ... (renderPage logic remains the same) ... */ switch(currentPage.page){case 'home':return(<> <Hero /> <AboutSection /> <PortfolioSection /> <ServicesSection /> <TechnologiesSection /> <CallToActionSection onOpenContactModal={()=>setIsContactPopupOpen(true)}/></>);case 'about':return <AboutPage />;case 'portfolio':return <PortfolioPage />;case 'contact':return <ContactPage />;case 'service':{const selectedService=serviceData.find(s=>s.slug===currentPage.slug);return <ServicePage service={selectedService}/>;} default:return(<> <Hero /> <AboutSection /> <PortfolioSection /> <ServicesSection /> <TechnologiesSection /> <CallToActionSection onOpenContactModal={()=>setIsContactPopupOpen(true)}/></>);}};
+  const renderPage = () => { /* ... renderPage logic ... */ switch(currentPage.page){case 'home':return(<> <Hero /> <AboutSection /> <PortfolioSection /> <ServicesSection /> <TechnologiesSection /> <CallToActionSection onOpenContactModal={()=>setIsContactPopupOpen(true)}/></>);case 'about':return <AboutPage />;case 'portfolio':return <PortfolioPage />;case 'contact':return <ContactPage />;case 'service':{const selectedService=serviceData.find(s=>s.slug===currentPage.slug);return <ServicePage service={selectedService}/>;} default:return(<> <Hero /> <AboutSection /> <PortfolioSection /> <ServicesSection /> <TechnologiesSection /> <CallToActionSection onOpenContactModal={()=>setIsContactPopupOpen(true)}/></>);}};
 
   return (
     <>
       {isLoading && <Preloader isHiding={isHiding} />}
-
       {!isLoading && (
         <div className="website-content">
           <Header onNavigate={handleNavigate} currentPage={currentPage.page} />
           <main>{renderPage()}</main>
           <Footer />
           <AIChatWidget />
-          
-          {/* --- UPDATED MODAL AND FORM --- */}
           <Modal isOpen={isContactPopupOpen} onClose={() => setIsContactPopupOpen(false)} customClass="contact-popup-modal">
             <div className="contact-popup-content">
               <button aria-label="Close modal" className="popup-close-btn" onClick={() => setIsContactPopupOpen(false)}>×</button>
               <div className="popup-header"><h2>Get In Touch</h2></div>
-              <div className="wavy-divider"><svg viewBox="0 0 500 40" preserveAspectRatio="none"><path d="M0,20 C150,40 350,0 500,20 L500,00 L0,0 Z" style={{stroke:'none',fill:'var(--primary-dark-blue, #0d2340)'}}></path></svg></div>
+              <div className="wavy-divider"><svg viewBox="0 0 500 40"><path d="M0,20 C150,40 350,0 500,20 L500,00 L0,0 Z" style={{stroke:'none',fill:'var(--primary-dark-blue, #0d2340)'}}></path></svg></div>
               <div className="popup-form-body">
-                
-                {/* NEW: Display status message */}
-                {popupStatus.message && (
-                  <div className={`status-message ${popupStatus.type}`}>
-                    {popupStatus.message}
-                  </div>
-                )}
-
+                {popupStatus.message && (<div className={`status-message ${popupStatus.type}`}>{popupStatus.message}</div>)}
                 <form className="popup-form" onSubmit={handlePopupFormSubmit}>
-                  <div className="popup-input-group"><input type="text" id="popup-name" name="fullName" placeholder="Your Name" value={popupFormData.fullName} onChange={handlePopupChange} required /><FaUser className="input-icon" /></div>
-                  <div className="popup-input-group"><input type="email" id="popup-email" name="email" placeholder="Your Email" value={popupFormData.email} onChange={handlePopupChange} required /><FaEnvelope className="input-icon" /></div>
-                  <div className="popup-input-group"><select id="popup-service" name="service" value={popupFormData.service} onChange={handlePopupChange} required><option value="" disabled>Select a Service</option>{servicesList.map((service, index) => (<option key={index} value={service}>{service}</option>))}</select><FaConciergeBell className="input-icon" /></div>
-                  <div className="popup-input-group"><textarea id="popup-message" name="message" placeholder="Your Message" value={popupFormData.message} onChange={handlePopupChange} required></textarea><FaPencilAlt className="input-icon" style={{top:'22px'}}/></div>
-                  <button type="submit" className="popup-submit-button" disabled={isPopupSubmitting}>
-                    {isPopupSubmitting ? 'Sending...' : 'Send Message'}
-                  </button>
+                  <div className="popup-input-group"><input type="text" name="fullName" placeholder="Your Name" value={popupFormData.fullName} onChange={handlePopupChange} required /><FaUser className="input-icon" /></div>
+                  <div className="popup-input-group"><input type="email" name="email" placeholder="Your Email" value={popupFormData.email} onChange={handlePopupChange} required /><FaEnvelope className="input-icon" /></div>
+                  <div className="popup-input-group"><select name="service" value={popupFormData.service} onChange={handlePopupChange} required><option value="" disabled>Select a Service</option>{servicesList.map((s, i) => (<option key={i} value={s}>{s}</option>))}</select><FaConciergeBell className="input-icon" /></div>
+                  <div className="popup-input-group"><textarea name="message" placeholder="Your Message" value={popupFormData.message} onChange={handlePopupChange} required></textarea><FaPencilAlt className="input-icon" style={{top:'22px'}}/></div>
+                  <button type="submit" className="popup-submit-button" disabled={isPopupSubmitting}>{isPopupSubmitting ? 'Sending...' : 'Send Message'}</button>
                 </form>
               </div>
             </div>
