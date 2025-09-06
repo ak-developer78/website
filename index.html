@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Shipssured</title>
+    <link rel="preconnect" href=".https://fonts.googleapis.com">
+    <link rel="preconnect" href=".https://fonts.gstatic.com" crossorigin>
+    <link href=".https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset & Global Styles */
+        :root {
+            --color-primary: #4277BD;
+            --color-secondary: #6590C9;
+            --color-text-dark: #1E2022;
+            --color-text-light: #FFFFFF;
+            --color-text-grey: #64646C;
+            --color-bg-light: #FFFFFF;
+            --color-bg-grey-light: #F7F8FA;
+            --color-bg-grey-medium: #EFF1F9;
+            --font-primary: 'Poppins', sans-serif;
+            --site-width: 1200px;
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-text-dark);
+            background-color: var(--color-bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 600;
+        }
+
+        .container {
+            width: 100%;
+            max-width: var(--site-width);
+            margin: 0 auto;
+            padding: 0 3%;
+        }
+        
+        section {
+            padding: 100px 0;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: var(--color-bg-light);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--color-primary);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--color-text-dark);
+        }
+
+        .main-nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-text-dark);
+            padding-bottom: 5px;
+            position: relative;
+        }
+
+        .main-nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .main-nav a:hover::after,
+        .main-nav a.active::after {
+            transform: scaleX(1);
+        }
+
+        .hamburger-icon {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 22px;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .hamburger-icon span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--color-text-dark);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger-icon span:nth-child(1) { top: 0px; }
+        .hamburger-icon span:nth-child(2) { top: 9px; }
+        .hamburger-icon span:nth-child(3) { top: 18px; }
+
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            min-height: 600px;
+            padding: 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-light);
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            text-align: left;
+            width: 100%;
+            max-width: var(--site-width);
+            padding: 0 3%;
+            align-self: flex-end;
+            margin-bottom: 8%;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+        
+        .hero-content p {
+            font-size: clamp(20px, 2.5vw, 34px);
+            font-weight: 400;
+            max-width: 68%;
+            margin-top: 1rem;
+        }
+
+        .hero-buttons {
+            margin-top: 2.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: var(--font-primary);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .btn.btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+        }
+
+        .btn.btn-primary:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn.btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--color-text-light);
+            border: 2px solid var(--color-text-light);
+        }
+        
+        .btn.btn-secondary:hover {
+            background-color: var(--color-text-light);
+            color: var(--color-text-dark);
+        }
+
+        /* --- REVAMPED Services Section --- */
+        .services-section {
+            background-color: var(--color-bg-grey-light);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(32px, 4vw, 42px);
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--color-text-grey);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--color-bg-light);
+            padding: 35px 30px;
+            border-radius: var(--border-radius);
+            text-align: left;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--color-primary);
+            transition: height 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-card:hover::before {
+            height: 6px;
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 25px;
+            background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--color-text-light);
+            stroke-width: 1.5;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon svg {
+            transform: rotate(-15deg) scale(1.1);
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 16px;
+            color: var(--color-text-grey);
+        }
+
+        /* About Us Section */
+        .about-section {
+            background-color: var(--color-bg-light);
+            overflow: hidden;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image-col img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: block;
+        }
+
+        .about-content-col h2 {
+            font-size: clamp(32px, 4vw, 42px);
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 20px;
+        }
+
+        .about-content-col .about-description {
+            font-size: 18px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: var(--color-text-grey);
+        }
+
+        .about-features {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .feature-icon {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background-color: var(--color-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--color-text-light);
+            stroke-width: 2;
+        }
+
+        .feature-text h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .feature-text p {
+            font-size: 15px;
+            color: var(--color-text-grey);
+        }
+
+        /* --- REVAMPED Why Choose Us Section --- */
+        .why-us-section {
+            background-color: var(--color-bg-grey-light);
+        }
+        
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .why-us-card {
+            background-color: var(--color-bg-light);
+            padding: 35px 30px;
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .why-us-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, var(--color-secondary), var(--color-primary));
+        }
+        
+        .why-us-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .why-us-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .why-us-card:hover .why-us-icon {
+            transform: scale(1.1);
+        }
+
+        .why-us-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .why-us-card p {
+            color: var(--color-text-grey);
+        }
+
+        /* --- REVAMPED Contact Section --- */
+        .contact-section {
+            background-color: var(--color-bg-grey-medium);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: center;
+            background-color: var(--color-bg-light);
+            padding: 60px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .contact-info h2 {
+            font-size: clamp(28px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            color: var(--color-text-grey);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .contact-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-field label {
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-field label span { color: var(--color-primary); }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--color-bg-grey-light);
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-field textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(66, 119, 189, 0.2);
+        }
+        
+        .submit-btn {
+            padding: 15px 35px;
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: auto;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        #form-success-message {
+            display: none;
+            color: #28a745;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* --- REVAMPED Footer --- */
+        footer {
+            padding-top: 80px;
+            background-color: #111315;
+            color: #a9a9a9;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 2fr;
+            gap: 50px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .footer-col h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-text-light);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-col a:hover {
+            color: var(--color-text-light);
+            text-decoration: underline;
+        }
+
+        .footer-about .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .footer-about .logo-text {
+            color: var(--color-text-light);
+        }
+
+        .footer-about .logo-svg {
+            fill: var(--color-text-light);
+        }
+
+        .footer-about p {
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #444;
+            background-color: #222;
+            color: var(--color-text-light);
+            border-radius: 8px 0 0 8px;
+            font-family: var(--font-primary);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .newsletter-form button {
+            padding: 12px 18px;
+            border: none;
+            background-color: var(--color-primary);
+            color: var(--color-text-light);
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--color-secondary);
+        }
+
+        .footer-bottom {
+            padding: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-social a {
+            display: block;
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            transform: scale(1.1);
+        }
+
+        .footer-social img {
+            width: 100%;
+            height: 100%;
+            filter: invert(0.7);
+        }
+        
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1000px) {
+            .contact-content {
+                width: 100%;
+            }
+            .testimonials-grid,
+            .why-us-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .testimonial-col:last-child {
+                grid-column: 1 / span 2;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 750px) {
+            section { padding: 60px 0; }
+            .main-nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0,0,0,0.8);
+            }
+
+            .main-nav.active {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                background-color: var(--color-bg-grey-medium);
+                width: 60%;
+                height: 100%;
+                padding: 60px 40px;
+                gap: 25px;
+                animation: slideIn 0.3s forwards;
+            }
+            
+            @keyframes slideIn {
+                from { transform: translateX(100%); }
+                to { transform: translateX(0); }
+            }
+
+            .main-nav a { font-size: 20px; }
+            .hamburger-icon { display: block; }
+            .hamburger-icon.active span:nth-child(1) { top: 9px; transform: rotate(135deg); }
+            .hamburger-icon.active span:nth-child(2) { opacity: 0; left: -30px; }
+            .hamburger-icon.active span:nth-child(3) { top: 9px; transform: rotate(-135deg); }
+            
+            .hero-content {
+                max-width: 100%;
+                margin-bottom: 15%;
+            }
+            .hero-content p { max-width: 100%; }
+            .hero-buttons { flex-direction: column; align-items: flex-start; }
+            
+            .services-grid, .why-us-grid, .testimonials-grid, .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid { padding: 30px; }
+            .testimonial-col:last-child { grid-column: auto; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-grid > div { grid-column: auto; }
+
+            .footer-main { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
+        }
+
+        @media (max-width: 500px) {
+            .main-nav ul { width: 80%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="site-header">
+        <div class="container nav-container">
+            <a href="#" class="logo-container">
+                <svg class="logo-svg" viewBox="34.74 25.13 1718.53 900.68" xmlns="http://www.w3.org/2000/svg"><path d="M1709.05 25.13h-935.7c-24.42 0-44.21 19.8-44.21 44.21v140.58H78.95c-24.42 0-44.21 19.8-44.21 44.21V881.6c0 24.42 19.8 44.21 44.21 44.21h935.7c24.42 0 44.21-19.79 44.21-44.21V741.02h650.2c24.42 0 44.21-19.8 44.21-44.21V69.35c0-24.42-19.8-44.21-44.21-44.21Zm-676.66 636.44c0 24.88-20.17 45.05-45.05 45.05H800.66c-24.88 0-45.05-20.17-45.05-45.05V288.34c0-24.88 20.17-45.05 45.05-45.05h186.68c24.88 0 45.05 20.17 45.05 45.05z"></path></svg>
+                <span class="logo-text">SHIPSSURED</span>
+            </a>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="#services">SERVICES</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                    <li><a href="#why-us">WHY US</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger-icon" id="hamburger-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <video class="hero-video-bg" autoplay loop muted playsinline src="https://video.wixstatic.com/video/c837a6_d079a69ce104455697373a37cf054f3e/1080p/mp4/file.mp4"></video>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1>Protect Your Shipments, Secure Your Business.</h1>
+                <p>Post-Purchase Shipping Insurance for Businesses and Organizations.</p>
+                <div class="hero-buttons">
+                    <a href="tel:123-456-7890" class="btn btn-primary">Make A Claim</a>
+                    <a href="#contact" class="btn btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="reveal">Our Insurance Services</h2>
+                    <p class="reveal">Flexible and comprehensive coverage designed to meet the unique needs of your business, from single packages to large-scale logistics.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10.5H3M21 10.5C21 12.9853 18.9853 15 16.5 15C14.0147 15 12 12.9853 12 10.5C12 8.01472 14.0147 6 16.5 6C18.9853 6 21 8.01472 21 10.5ZM21 10.5V19.5C21 20.3284 20.3284 21 19.5 21H4.5C3.67157 21 3 20.3284 3 19.5V4.5C3 3.67157 3.67157 3 4.5 3H12"></path></svg>
+                        </div>
+                        <h3>Standard Insurance</h3>
+                        <p>Essential coverage for everyday shipments against loss, damage, or theft during transit.</p>
+                    </div>
+                     <div class="service-card reveal">
+                        <div class="service-icon">
+                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25L12 3L3 8.25M21 8.25V15.75L12 21L3 15.75V8.25M21 8.25L12 13.5L3 8.25"></path></svg>
+                        </div>
+                        <h3>High-Value Items</h3>
+                        <p>Specialized, high-limit coverage for your expensive, fragile, or irreplaceable items.</p>
+                    </div>
+                     <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2 12H22"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 2C14.5013 4.47513 15.9052 8.11438 16 12C15.9052 15.8856 14.5013 19.5249 12 22C9.49872 19.5249 8.09485 15.8856 8 12C8.09485 8.11438 9.49872 4.47513 12 2V2Z"></path></svg>
+                        </div>
+                        <h3>International Shipping</h3>
+                        <p>Global protection that covers your shipments across borders, including customs-related risks.</p>
+                    </div>
+                     <div class="service-card reveal">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M23 21V19C22.9994 17.2033 21.8023 15.5804 20 15.12"></path><path stroke-linecap="round" stroke-linejoin="round" d="M16 3.13C17.8023 3.58045 19.0006 5.20333 19 7C19 8.79667 17.8023 10.4196 16 10.87"></path></svg>
+                        </div>
+                        <h3>Business Solutions</h3>
+                        <p>Comprehensive and scalable protection plans designed for businesses with high-volume shipping needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image-col reveal">
+                        <img src="https://static.wixstatic.com/media/11062b_5007a304ea0f44a5a89f64fb0d482b76~mv2.jpg/v1/fill/w_593,h_491,fp_0.55_0.28,q_80,usm_0.66_1.00_0.01,enc_auto/Portrait%20Against%20a%20Wall.jpg" alt="Professional team working in a modern office">
+                    </div>
+                    <div class="about-content-col reveal">
+                        <h2>Your Trusted Partner in Shipping Protection</h2>
+                        <p class="about-description">
+                            At Shipssured, we provide peace of mind for every package. We understand that your shipments are more than just items—they're commitments to your customers. Our mission is to offer seamless, reliable, and customizable shipping insurance that protects your business from the unexpected, so you can focus on what you do best.
+                        </p>
+                        <ul class="about-features">
+                            <li class="feature-item">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Unmatched Reliability</h4>
+                                    <p>Count on our proven track record for secure and dependable coverage.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Fast & Fair Claims</h4>
+                                    <p>Our streamlined process ensures your claims are handled quickly and efficiently.</p>
+                                </div>
+                            </li>
+                            <li class="feature-item">
+                                <div class="feature-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                </div>
+                                <div class="feature-text">
+                                    <h4>Dedicated Support</h4>
+                                    <p>Our team of experts is always here to provide personalized assistance.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Why Trust Us Section -->
+        <section id="why-us" class="why-us-section">
+             <div class="container">
+                 <div class="section-header">
+                    <h2 class="reveal">Why Choose Shipssured?</h2>
+                    <p class="reveal">We combine cutting-edge technology with industry expertise to deliver insurance solutions that are simple, effective, and built for modern commerce.</p>
+                 </div>
+                 <div class="why-us-grid">
+                    <div class="why-us-card reveal">
+                        <img src="https://static.wixstatic.com/media/c837a6_d97f8fc37a6a4a92a69f525389eea33e~mv2.png/v1/fill/w_60,h_44,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/stairs.png" alt="Stairs icon" class="why-us-icon">
+                        <h3>Proven Track Record</h3>
+                        <p>Thousands of businesses trust us to protect millions of shipments worldwide. Our history of reliability speaks for itself.</p>
+                    </div>
+                     <div class="why-us-card reveal">
+                        <img src="https://static.wixstatic.com/media/c837a6_51ce6d0e16974074bfc5ed6dfe498788~mv2.png/v1/fill/w_60,h_44,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/light.png" alt="Lightbulb icon" class="why-us-icon">
+                        <h3>Rapid Claims Processing</h3>
+                        <p>Our intelligent claims system processes most claims within hours, not days, getting you reimbursed faster.</p>
+                    </div>
+                     <div class="why-us-card reveal">
+                        <img src="https://static.wixstatic.com/media/c837a6_8aede42ac8be4ebc95697fa502e5b79d~mv2.png/v1/fill/w_60,h_44,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/wheel%202.png" alt="Wheel icon" class="why-us-icon">
+                        <h3>Customizable Coverage</h3>
+                        <p>Tailor your insurance policies to match your specific products, shipping routes, and risk tolerance.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-info reveal">
+                        <h2>Get in Touch</h2>
+                        <p>Have a question or need a custom quote? Fill out the form, and our team will get back to you shortly.</p>
+                        <img src="https://static.wixstatic.com/media/11062b_d4b50c00860149afaeae8e9248ff8ede~mv2.jpg/v1/fill/w_348,h_452,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/Purple%20Theme%20Portrait.jpg" alt="Customer support representative" class="contact-image">
+                    </div>
+                    <div class="contact-form-container reveal">
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-grid">
+                                <div class="form-field">
+                                    <label for="first-name">First name<span>*</span></label>
+                                    <input type="text" id="first-name" name="first-name" required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="last-name">Last name<span>*</span></label>
+                                    <input type="text" id="last-name" name="last-name" required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="email">Email<span>*</span></label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="phone">Phone</label>
+                                    <input type="tel" id="phone" name="phone">
+                                </div>
+                                <div class="form-field full-width">
+                                    <label for="message">Message<span>*</span></label>
+                                    <textarea id="message" name="message" required></textarea>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Submit</button>
+                            <p id="form-success-message">Thanks! We've received your submission.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="reveal">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-col footer-about">
+                    <a href="#" class="logo-container">
+                        <svg class="logo-svg" viewBox="34.74 25.13 1718.53 900.68" xmlns="http://www.w3.org/2000/svg"><path d="M1709.05 25.13h-935.7c-24.42 0-44.21 19.8-44.21 44.21v140.58H78.95c-24.42 0-44.21 19.8-44.21 44.21V881.6c0 24.42 19.8 44.21 44.21 44.21h935.7c24.42 0 44.21-19.79 44.21-44.21V741.02h650.2c24.42 0 44.21-19.8 44.21-44.21V69.35c0-24.42-19.8-44.21-44.21-44.21Zm-676.66 636.44c0 24.88-20.17 45.05-45.05 45.05H800.66c-24.88 0-45.05-20.17-45.05-45.05V288.34c0-24.88 20.17-45.05 45.05-45.05h186.68c24.88 0 45.05 20.17 45.05 45.05z"></path></svg>
+                        <span class="logo-text">SHIPSSURED</span>
+                    </a>
+                    <p>Peace of mind, delivered. Smart shipping insurance for modern business.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Standard Insurance</a></li>
+                        <li><a href="#services">High-Value Items</a></li>
+                        <li><a href="#services">International Shipping</a></li>
+                        <li><a href="#services">Business Solutions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Subscribe to our Newsletter</h4>
+                    <p>Get the latest news and updates from Shipssured.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Shipssured. All rights reserved.</p>
+                <div class="footer-social">
+                     <a href="#" aria-label="LinkedIn"><img src="https://static.wixstatic.com/media/11062b_72c275822d4344358ee379f14e7e115f~mv2.png/v1/fill/w_25,h_25,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/LinkedIn.png" alt="LinkedIn"></a>
+                     <a href="#" aria-label="Facebook"><img src="https://static.wixstatic.com/media/11062b_362ef89dec51403eb0ee59a21bde967c~mv2.png/v1/fill/w_25,h_25,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Facebook.png" alt="Facebook"></a>
+                     <a href="#" aria-label="X"><img src="https://static.wixstatic.com/media/11062b_e82f42804b3546dfa8e426e752b24542~mv2.png/v1/fill/w_25,h_25,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/X.png" alt="X"></a>
+                     <a href="#" aria-label="Instagram"><img src="https://static.wixstatic.com/media/11062b_ca1d837ce7194421b781ee7384061a8e~mv2.png/v1/fill/w_25,h_25,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Instagram.png" alt="Instagram"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sticky Header
+            const header = document.getElementById('site-header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+            });
+
+            // Mobile Hamburger Menu
+            const hamburger = document.getElementById('hamburger-icon');
+            const nav = document.getElementById('main-nav');
+            const navLinks = nav.querySelectorAll('a');
+
+            const toggleMenu = () => {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('active');
+            };
+
+            hamburger.addEventListener('click', toggleMenu);
+            navLinks.forEach(link => link.addEventListener('click', () => {
+                if (nav.classList.contains('active')) toggleMenu();
+            }));
+            nav.addEventListener('click', (e) => {
+                 if (e.target === nav) toggleMenu();
+            });
+
+            // Contact Form Submission
+            const form = document.getElementById('contact-form');
+            const successMessage = document.getElementById('form-success-message');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    form.reset();
+                    successMessage.style.display = 'none';
+                }, 4000);
+            });
+            
+            // Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        entry.target.querySelectorAll('.reveal').forEach((child, index) => {
+                            child.style.transitionDelay = `${index * 100}ms`;
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
